@@ -64,22 +64,35 @@ UNION OPERATOR: 1) iki sorgu(QUERY) sonucunu birlestirmek icin kullanilir.
 				4) Tek bir sutuna cok bir sutun mevcut data durumuna dikkat etmek gerekir.
 				*/
 -
+--salary değeri 3000'den yüksek olan state değerlerini ve 2000'den küçük olan name değerlerini tekrarsiz olarak bulun.
+select state from workers where salary>3000
+union 
+select name from workers where salary<2000
+
 --salary değeri 3000'den yüksek olan state değerlerini ve 2000'den küçük olan name değerlerini tekrarlı olarak bulun.
+select state from workers where salary>3000
+union all
+select name from workers where salary<2000
 
 
 --salary değeri 1000'den yüksek, 2000'den az olan "ortak" name değerlerini bulun.
-
+select name from workers where salary>1000
+intersect
+select name from workers where salary<2000;
 
 
 
 --salary değeri 2000'den az olan ve company değeri  IBM, APPLE yada MICROSOFT olan ortak "name" değerlerini bulun.
-
-
+select name from workers where salary<2000
+intersect
+select name from workers where company in( 'IBM', 'APPLE','MICROSOFT' )
 
 
 --EXCEPT Operator : Bir sorgu sonucundan başka bir sorgu sonucunu çıkarmak için kullanılır. Unique(tekrarsız) recordları verir.
 --salary değeri 3000'den az ve GOOGLE'da çalışmayan  name değerlerini bulun.
-
+select name from workers where salary <3000
+except
+select name from workers where company='GOOGLE';
 
 
 CREATE TABLE my_companies
@@ -121,21 +134,35 @@ JOINS : 1)INNER JOIN : iki tablonun ortak alanalrini verir.
 */
 
 -- Ortak companyler için company_name, order_id ve order_date değerlerini çağırın.
+select a.company_name,b.order_id,b.order_date 
+from my_companies as a inner join orders as b
+on a.company_id=b.company_id;
 
 
 -- 2) LEFT JOIN
 --my_companies table'ındaki companyler için order_id ve order_date değerlerini çağırın.
+select b.order_id,b.order_date 
+from my_companies as a left join orders as b
+on a.company_id=b.company_id;
+
 
 
 
 --3) RIGHT JOIN
 --Orders table'ındaki company'ler için company_name, company_id ve order_date değerlerini çağırın.
 --1. Yol
+select a.company_name,b.company_id,b.order_date 
+from my_companies as a right join orders as b
+on a.company_id=b.company_id;
 
 
 
 --FULL JOIN
 --İki table'dan da company_name, order_id ve order_date değerlerini çağırın.
+select a.company_name,b.order_id,b.order_date 
+from my_companies as a full join orders as b
+on a.company_id=b.company_id;
+
 
 
 --SELF JOIN
@@ -152,4 +179,12 @@ INSERT INTO workers VALUES(3, 'Angie Star', 'QA Lead', 4);
 INSERT INTO workers VALUES(4, 'Amy Sky', 'CEO', 5);
 SELECT * FROM workers;
 --workers tablosunu kullanarak çalışanların yöneticilerini gösteren bir tablo hazırlayın.
+
+
+
+
+
+
+
+
 
