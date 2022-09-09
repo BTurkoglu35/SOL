@@ -32,7 +32,9 @@ insert into siparisler values(7004,10.57,'2020-10-25',3008,5005)
 insert into siparisler values(7007,300.7,'2021-2-12',3004,5007)
 insert into siparisler values(7005,2450.5,'2020-5-14',3009,5008)
 insert into siparisler values(7008,15.5,'2020-6-19',3003,5002)
-
+insert into siparisler values(7008,5000,'2021-12-04',3003,5002)
+insert into siparisler values(7007,150.7,'2021-4-12',3004,5007)
+insert into siparisler values(7002,220.45,'2021-10-10',3007,5002)
 select * from siparisler
 select * from musteri
 
@@ -129,16 +131,25 @@ from musteri a right join satici b
 on a.satici_kimligi=b.satici_kimligi
 order by b.satici_kimligi
 
+--Soru 14:
+ --Aşağıdaki tablolardan tüm satış görevlilerini müşteri adı, şehir, derece, sipariş numarası, tarih ve miktar 
+ --ile birlikte listelemek için bir SQL sorgusu yazın.
+select a.isim,b.cust_name,b.sehir,b.derece,c.siparis_no,c.siparis_tarihi,c.fiyat
+from satici a left join musteri b
+on a.satici_kimligi=b.satici_kimligi
+ left join siparisler c
+on a.satici_kimligi=c.satici_kimligi
 
 
+select a.isim,b.cust_name,b.sehir,b.derece,c.siparis_no,c.siparis_tarihi,c.fiyat
+from  musteri b right join satici a
+on a.satici_kimligi=b.satici_kimligi
+right join siparisler c
+on a.satici_kimligi=c.satici_kimligi
 
-
-
-
-
-
-
-
+--SORU 15
+--Satıcı tablosunun her satırını müşteri tablosunun her satırıyla birleştirmek için bir SQL sorgusu yazın. 
+select * from satici a full join musteri b on a.satici_kimligi=b.satici_kimligi
 
 
 
